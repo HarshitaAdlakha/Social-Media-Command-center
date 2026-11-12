@@ -1,0 +1,6 @@
+{
+  "name": "@antonov.systems Command Center",
+  "description": "Social Command Center for @antonov.systems covering aerospace engineering, system dynamics, and macro-geopolitics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

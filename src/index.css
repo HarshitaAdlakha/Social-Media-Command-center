@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html,
+  body {
+    background-color: #F78DA7;
+    color: #111111;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F78DA7;
+    border-left: 1px solid #111111;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #111111;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #03AA5C;
+  }
+}
+
+.mac-titlebar-stripes {
+  background-image: repeating-linear-gradient(
+    0deg,
+    #111111,
+    #111111 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  height: 10px;
+}
+
+.retro-grid-dots {
+  background-image: radial-gradient(rgba(17, 17, 17, 0.22) 0.75px, transparent 0.75px);
+  background-size: 10px 10px;
+}

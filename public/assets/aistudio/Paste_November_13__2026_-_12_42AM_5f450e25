@@ -1,0 +1,541 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>@antonov.systems // Social Command Center 1.1</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "type-pink": "#F78DA7",
+            "type-pink-light": "#FFC0D0",
+            "type-pink-surface": "#FCA5BA",
+            "type-mint": "#03AA5C",
+            "type-mint-light": "#77FCA4",
+            "type-mint-dim": "#34D399",
+            "type-cream": "#F9F6F0",
+            "type-black": "#111111",
+            "type-dark": "#0E0E0E",
+            "type-border": "#111111",
+            "primary": "#58df8a",
+            "primary-container": "#03aa5c",
+            "surface-container-lowest": "#F78DA7",
+            "on-surface": "#111111"
+          },
+          fontFamily: {
+            sans: ['Geist', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Courier New', 'monospace']
+          },
+          boxShadow: {
+            'brutal': '2px 2px 0px #111111',
+            'brutal-lg': '3px 3px 0px #111111',
+            'brutal-pressed': '0px 0px 0px #111111'
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #F78DA7;
+        color: #111111;
+        font-family: 'Geist', sans-serif;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #F78DA7;
+        border-left: 1px solid #111111;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #111111;
+      }
+    }
+    /* Vintage Mac OS System 7 Titlebar Pinstripes */
+    .mac-titlebar-stripes {
+      background-image: repeating-linear-gradient(
+        0deg,
+        #111111,
+        #111111 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      height: 10px;
+    }
+    .retro-grid-dots {
+      background-image: radial-gradient(#111111 0.75px, transparent 0.75px);
+      background-size: 8px 8px;
+    }
+    .stipple-bg {
+      background-image: radial-gradient(rgba(17,17,17,0.2) 0.6px, transparent 0.6px);
+      background-size: 4px 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#F78DA7] text-[#111111] antialiased selection:bg-[#111111] selection:text-[#F78DA7] min-h-screen">
+<!-- TOP BAR (typesafe.ai authentic retro masthead) -->
+<header class="fixed top-0 left-0 right-0 h-11 bg-[#F78DA7] border-b-2 border-[#111111] z-50 flex items-center justify-between px-3 font-mono text-xs select-none">
+<div class="flex items-center gap-3">
+<!-- Vintage Close / App Icon -->
+<div class="flex items-center gap-2 pr-3 border-r-2 border-[#111111]">
+<div class="w-4 h-4 bg-white border border-[#111111] shadow-[1px_1px_0px_#111] flex items-center justify-center font-bold text-[9px]">■</div>
+<span class="font-extrabold tracking-tight text-sm">@antonov.systems</span>
+<span class="text-[10px] bg-[#111111] text-[#F78DA7] px-1 font-bold">RLCD::COMMAND</span>
+</div>
+<!-- System status tags -->
+<div class="hidden lg:flex items-center gap-2 text-[11px]">
+<span class="font-bold">STATUS:</span>
+<span class="bg-[#03AA5C] text-white px-1.5 py-0.2 border border-[#111111] text-[10px] font-bold shadow-[1px_1px_0px_#111]">● SYSTEM_ONE_ACTIVE</span>
+<span class="text-[#111111]/70 font-mono">v1.1 // rlcd.prod</span>
+<span class="text-xs">∵ ⩆</span>
+</div>
+</div>
+<!-- Multi-Account Channel Switchers (Pills) -->
+<div class="hidden xl:flex items-center gap-1 bg-[#111111]/10 p-0.5 border border-[#111111]">
+<button class="px-2 py-0.5 bg-[#111111] text-[#F78DA7] font-bold text-[11px] border border-[#111111] shadow-[1px_1px_0px_#111]">All Channels</button>
+<button class="px-2 py-0.5 bg-white text-[#111111] hover:bg-[#FFC0D0] text-[11px] font-medium border border-[#111111]">YouTube (42k)</button>
+<button class="px-2 py-0.5 bg-white text-[#111111] hover:bg-[#FFC0D0] text-[11px] font-medium border border-[#111111]">Instagram (18.5k)</button>
+<button class="px-2 py-0.5 bg-white text-[#111111] hover:bg-[#FFC0D0] text-[11px] font-medium border border-[#111111]">LinkedIn + Newsletter (94k)</button>
+<button class="px-2 py-0.5 bg-white text-[#111111] hover:bg-[#FFC0D0] text-[11px] font-medium border border-[#111111]">Substack</button>
+<button class="px-2 py-0.5 bg-white text-[#111111] hover:bg-[#FFC0D0] text-[11px] font-medium border border-[#111111]">Reddit</button>
+</div>
+<!-- Right Action Buttons -->
+<div class="flex items-center gap-2">
+<div class="hidden md:flex items-center gap-1 px-1.5 py-0.5 border border-[#111111] bg-white text-[10px] font-mono">
+<span>⌘K</span>
+<span class="text-[#111111]/50">QUERY</span>
+</div>
+<!-- Action Button 1: Run Content Audit -->
+<button class="px-2.5 py-0.5 bg-[#03AA5C] hover:bg-[#028f4d] active:translate-x-0.5 active:translate-y-0.5 text-white font-bold text-[11px] border-2 border-[#111111] shadow-[2px_2px_0px_#111] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">policy</span>
+<span>Run Content Audit</span>
+</button>
+<!-- Action Button 2: Sync to Notion -->
+<button class="px-2.5 py-0.5 bg-white hover:bg-[#FFC0D0] active:translate-x-0.5 active:translate-y-0.5 text-[#111111] font-bold text-[11px] border-2 border-[#111111] shadow-[2px_2px_0px_#111] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">sync_alt</span>
+<span>Sync to Notion</span>
+</button>
+<div class="pl-2 border-l border-[#111111] text-[10px] font-mono font-bold">
+<span>[b.64]</span>
+</div>
+</div>
+</header><div class="fixed top-11 left-0 right-0 h-6 bg-[#F9F6F0] border-b-2 border-[#111111] z-40 flex items-center justify-between px-3 font-mono text-[10px] select-none overflow-x-auto"><div class="flex items-center gap-1.5 whitespace-nowrap"><span class="text-[#111111]/70 font-bold uppercase tracking-wider text-[9px] mr-1">[PLATFORM_TELEMETRY]:</span><div class="flex items-center gap-1 px-1.5 py-0.5 bg-white border border-[#111111] shadow-[1px_1px_0px_#111]"><span class="w-1.5 h-1.5 rounded-full bg-[#03AA5C]"></span><span class="font-bold">YT Studio:</span><span class="text-[#03AA5C] font-extrabold">SYNCED</span><span class="text-[#111111]/60">(4.8ms)</span></div><div class="flex items-center gap-1 px-1.5 py-0.5 bg-white border border-[#111111] shadow-[1px_1px_0px_#111]"><span class="w-1.5 h-1.5 rounded-full bg-[#03AA5C]"></span><span class="font-bold">LI API:</span><span class="text-[#03AA5C] font-extrabold">ACTIVE</span><span class="text-[#111111]/60">(v2.1)</span></div><div class="flex items-center gap-1 px-1.5 py-0.5 bg-white border border-[#111111] shadow-[1px_1px_0px_#111]"><span class="w-1.5 h-1.5 rounded-full bg-[#03AA5C]"></span><span class="font-bold">IG Graph:</span><span class="text-[#03AA5C] font-extrabold">HEALTHY</span></div><div class="flex items-center gap-1 px-1.5 py-0.5 bg-white border border-[#111111] shadow-[1px_1px_0px_#111]"><span class="w-1.5 h-1.5 rounded-full bg-[#03AA5C]"></span><span class="font-bold">Substack:</span><span class="text-[#03AA5C] font-extrabold">CONNECTED</span><span class="text-[#111111]/60">(94k sub)</span></div><div class="flex items-center gap-1 px-1.5 py-0.5 bg-[#FFC0D0]/40 border border-[#111111] shadow-[1px_1px_0px_#111]"><span class="w-1.5 h-1.5 rounded-full bg-[#03AA5C] animate-ping"></span><span class="font-bold">Reddit:</span><span class="font-bold text-[#111111]">KARMA VELOCITY +142/hr</span><span class="bg-[#03AA5C] text-white px-1 text-[8px] font-bold">ACTIVE</span></div></div><div class="hidden md:flex items-center gap-2 text-[9px] font-bold text-[#111111]/70"><span class="bg-white border border-[#111111] px-1 shadow-[1px_1px_0px_#111]">POLL_INTERVAL: 1000ms</span><span>ALL 5 PIPELINES GREEN</span></div></div>
+<!-- LEFT SIDEBAR: Retro Navigation Explorer -->
+<aside class="fixed left-0 top-11 bottom-6 w-56 bg-[#F78DA7] border-r-2 border-[#111111] z-40 flex flex-col justify-between font-mono select-none overflow-y-auto" style="top: 68px;">
+<div class="flex flex-col">
+<!-- Titlebar classic System 7 -->
+<div class="h-6 px-2 border-b-2 border-[#111111] flex items-center justify-between bg-white text-[11px] font-bold">
+<div class="flex items-center gap-1.5 w-full">
+<div class="w-2.5 h-2.5 border border-[#111111] bg-white"></div>
+<div class="flex-1 mac-titlebar-stripes mx-1 opacity-70"></div>
+<span class="px-1 bg-white font-mono text-[10px] tracking-wider uppercase">EXPLORER 1.1</span>
+<div class="flex-1 mac-titlebar-stripes mx-1 opacity-70"></div>
+</div>
+</div>
+<!-- Navigation Tree Items -->
+<div class="p-2 space-y-1 text-xs">
+<div class="text-[10px] font-extrabold uppercase tracking-wider text-[#111111]/70 px-1 py-1 flex items-center justify-between">
+<span>┌ WORKSPACE_PANES</span>
+<span>⌥1</span>
+</div>
+<!-- Tab 1: Overview & Analytics -->
+<a class="flex items-center justify-between px-2 py-1 bg-white text-[#111111] border border-[#111111] shadow-[2px_2px_0px_#111] font-bold" href="#">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[13px]">query_stats</span>
+<span class="truncate">Overview &amp; Analytics</span>
+</div>
+<span class="text-[9px] bg-[#03AA5C] text-white px-1">LIVE</span>
+</a>
+<!-- Tab 2: AI Content Audit -->
+<a class="flex items-center justify-between px-2 py-1 text-[#111111] hover:bg-white hover:border hover:border-[#111111] border border-transparent font-medium" href="#">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[13px]">verified_user</span>
+<span class="truncate">AI Content Audit</span>
+</div>
+<span class="text-[9px] border border-[#111111] bg-[#77FCA4] px-1 font-bold">94</span>
+</a>
+<!-- Tab 3: Weekly Planner & Shot Lists -->
+<a class="flex items-center justify-between px-2 py-1 text-[#111111] hover:bg-white hover:border hover:border-[#111111] border border-transparent font-medium" href="#">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[13px]">splitscreen</span>
+<span class="truncate">Weekly Planner</span>
+</div>
+<span class="text-[9px] text-[#111111] font-bold">7n</span>
+</a>
+<!-- Tab 4: Research Vault -->
+<a class="flex items-center justify-between px-2 py-1 text-[#111111] hover:bg-white hover:border hover:border-[#111111] border border-transparent font-medium" href="#">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[13px]">source</span>
+<span class="truncate">Research Vault</span>
+</div>
+<span class="text-[9px] text-[#111111]/70">38</span>
+</a>
+<!-- Tab 5: Voice Engine -->
+<a class="flex items-center justify-between px-2 py-1 text-[#111111] hover:bg-white hover:border hover:border-[#111111] border border-transparent font-medium" href="#">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[13px]">record_voice_over</span>
+<span class="truncate">Voice Engine</span>
+</div>
+<span class="text-[9px] bg-[#111111] text-[#F78DA7] px-1 font-bold">RLCD</span>
+</a>
+</div>
+<!-- Topics / Hashtags Module -->
+<div class="mt-2 border-t-2 border-[#111111] p-2 space-y-1.5 bg-[#FFC0D0]/40">
+<div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider">
+<span>SYS_CURATED_TOPICS</span>
+<span>4/4</span>
+</div>
+<div class="space-y-1 text-[11px]">
+<div class="flex items-center justify-between px-1.5 py-0.5 bg-white border border-[#111111]">
+<span class="truncate">#system-one-models</span>
+<span class="text-[#03AA5C] font-bold text-[9px]">98%</span>
+</div>
+<div class="flex items-center justify-between px-1.5 py-0.5 bg-white border border-[#111111]">
+<span class="truncate">#microvms-docker</span>
+<span class="text-[#03AA5C] font-bold text-[9px]">94%</span>
+</div>
+<div class="flex items-center justify-between px-1.5 py-0.5 bg-white border border-[#111111]">
+<span class="truncate">#generative-ui-ux</span>
+<span class="text-[#111111] font-bold text-[9px]">QUEUED</span>
+</div>
+<div class="flex items-center justify-between px-1.5 py-0.5 bg-white border border-[#111111]">
+<span class="truncate">#append-only-crud</span>
+<span class="text-[#111111]/60 font-bold text-[9px]">DRAFT</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Bottom: System Telemetry Strip -->
+<div class="border-t-2 border-[#111111] bg-white p-2 font-mono text-[10px] space-y-1">
+<div class="flex justify-between items-center font-bold">
+<span>MODEL_INFERENCE</span>
+<span class="text-[#03AA5C]">4.8ms</span>
+</div>
+<div class="flex justify-between text-[9px] text-[#111111]/80">
+<span>TOKEN_BUDGET</span>
+<span>$0.0000081 / run</span>
+</div>
+<!-- Progress Bar Mac Style -->
+<div class="w-full bg-[#F78DA7] h-2 border border-[#111111] p-[1px]">
+<div class="bg-[#111111] h-full w-[42%]"></div>
+</div>
+<div class="flex justify-between text-[9px] pt-1 border-t border-[#111111]/30">
+<span>ENGINE: JEV-RLCD</span>
+<span class="font-bold">TYPE_SAFE</span>
+</div>
+</div>
+</aside>
+<!-- MAIN CANVAS (typesafe.ai inspired layout) -->
+<div class="pl-56">
+<main class="pt-11 pb-8 px-4 w-full min-h-screen bg-[#F78DA7]" style="padding-top: 74px;">
+<div class="max-w-[1720px] mx-auto space-y-4 pt-3">
+<!-- TYPOGRAPHIC RETRO HERO STRIP: typesafe.ai style grotesque heading + bracket glyphs -->
+<div class="flex items-center justify-between border-2 border-[#111111] bg-white p-3 shadow-[3px_3px_0px_#111]">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono font-bold text-[#111111]/80">
+<span>┌</span>
+<span class="bg-[#F78DA7] px-1 border border-[#111111]">SYSTEM ONE MODEL FOR AUDIENCE ACQUISITION</span>
+<span>193.6x Faster, Calibrated Decisions.</span>
+<span>┐</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-black tracking-tight text-[#111111] mt-0.5 uppercase">
+              The First Social Command Center With Calibrated Probability
+            </h1>
+</div>
+<div class="hidden md:flex items-center gap-3 font-mono text-right text-xs">
+<div class="border border-[#111111] p-1.5 bg-[#FFC0D0]">
+<div class="font-bold text-[10px] text-[#111111]/70">CALIBRATION PROTOCOL</div>
+<div class="font-extrabold text-sm text-[#111111]">RLCD-v4.2 // CERTIFIED</div>
+</div>
+<span class="text-xl">⩆ ∵</span>
+</div>
+</div>
+<!-- ZONE A: TOP TELEMETRY CARDS (Retro Mac OS Windows with Pinstripe Titlebars) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+<!-- Card 1: Total Reach / Impressions -->
+<div class="border-2 border-[#111111] bg-white shadow-[3px_3px_0px_#111] flex flex-col justify-between">
+<div class="h-6 px-2 border-b-2 border-[#111111] bg-[#FFC0D0] flex items-center justify-between">
+<div class="w-2.5 h-2.5 border border-[#111111] bg-white"></div>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+<span class="font-mono text-[10px] font-extrabold uppercase">Reach.1.1</span>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-center text-[10px] font-mono text-[#111111]/70 font-bold mb-1">
+<span>TOTAL REACH / IMPRESSIONS</span>
+<span class="bg-[#03AA5C] text-white px-1 border border-[#111111] text-[9px]">+28.4% 7d</span>
+</div>
+<div class="flex items-baseline gap-1.5 my-1">
+<span class="text-3xl font-black font-sans tracking-tight text-[#111111]">3,842,910</span>
+<span class="text-[11px] font-mono text-[#111111]/70 font-semibold">evt/s</span>
+</div>
+<!-- Channel Breakdown Chips -->
+<div class="grid grid-cols-4 gap-1 text-[10px] font-mono text-center my-2 pt-2 border-t border-[#111111]/20">
+<div class="border border-[#111111] p-0.5 bg-[#F78DA7]/20"><span class="font-bold">YT:</span> 1.8M</div>
+<div class="border border-[#111111] p-0.5 bg-[#F78DA7]/20"><span class="font-bold">LI:</span> 1.2M</div>
+<div class="border border-[#111111] p-0.5 bg-[#F78DA7]/20"><span class="font-bold">IG:</span> 540k</div>
+<div class="border border-[#111111] p-0.5 bg-[#F78DA7]/20"><span class="font-bold">SUB:</span> 210k</div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono font-bold pt-1 border-t border-[#111111]/30">
+<span>NET DELTA: +412,800</span>
+<span class="text-[#03AA5C]">SIG_HIGH</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Engagement Velocity -->
+<div class="border-2 border-[#111111] bg-white shadow-[3px_3px_0px_#111] flex flex-col justify-between">
+<div class="h-6 px-2 border-b-2 border-[#111111] bg-[#FFC0D0] flex items-center justify-between">
+<div class="w-2.5 h-2.5 border border-[#111111] bg-white"></div>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+<span class="font-mono text-[10px] font-extrabold uppercase">Velocity.1.1</span>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-center text-[10px] font-mono text-[#111111]/70 font-bold mb-1">
+<span>ENGAGEMENT VELOCITY</span>
+<span class="bg-[#111111] text-white px-1 text-[9px] font-bold">2.4x BASE</span>
+</div>
+<div class="flex items-baseline gap-1.5 my-1">
+<span class="text-3xl font-black font-sans tracking-tight text-[#03AA5C]">7.84%</span>
+<span class="text-[11px] font-mono bg-[#77FCA4] text-[#111111] px-1 border border-[#111111] font-bold">▲ BURST</span>
+</div>
+<div class="grid grid-cols-2 gap-1 text-[10px] font-mono my-2 pt-2 border-t border-[#111111]/20">
+<div class="border border-[#111111] p-1 bg-[#F9F6F0] flex justify-between">
+<span>TRACTION:</span><span class="font-bold">x2.41</span>
+</div>
+<div class="border border-[#111111] p-1 bg-[#F9F6F0] flex justify-between">
+<span>INFLOW:</span><span class="font-bold">1,894/hr</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono font-bold pt-1 border-t border-[#111111]/30">
+<span>CONFIDENCE: 99.1%</span>
+<span class="bg-[#111111] text-white px-1 text-[9px]">CALIBRATED</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Operator Follower Delta -->
+<div class="border-2 border-[#111111] bg-white shadow-[3px_3px_0px_#111] flex flex-col justify-between">
+<div class="h-6 px-2 border-b-2 border-[#111111] bg-[#FFC0D0] flex items-center justify-between">
+<div class="w-2.5 h-2.5 border border-[#111111] bg-white"></div>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+<span class="font-mono text-[10px] font-extrabold uppercase">Followers.1.1</span>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-center text-[10px] font-mono text-[#111111]/70 font-bold mb-1">
+<span>OPERATOR FOLLOWER DELTA</span>
+<span class="bg-[#F78DA7] text-[#111111] px-1 border border-[#111111] text-[9px] font-bold">94% RETENTION</span>
+</div>
+<div class="flex items-baseline gap-1.5 my-1">
+<span class="text-3xl font-black font-sans tracking-tight text-[#111111]">+14,290</span>
+<span class="text-[11px] font-mono text-[#111111]/70 font-semibold">net/wk</span>
+</div>
+<div class="grid grid-cols-2 gap-1 text-[10px] font-mono my-2 pt-2 border-t border-[#111111]/20">
+<div class="border border-[#111111] p-1 bg-[#F9F6F0] flex justify-between">
+<span>30D RET:</span><span class="font-bold">94.2%</span>
+</div>
+<div class="border border-[#111111] p-1 bg-[#F9F6F0] flex justify-between">
+<span>SUB LTV:</span><span class="font-bold">$38.40</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono font-bold pt-1 border-t border-[#111111]/30">
+<span>CONVERSION: LI 52%</span>
+<span class="text-[#03AA5C]">YT 31% · SUB 17%</span>
+</div>
+</div>
+</div>
+<!-- Card 4: AI Channel Health & Resonance Score -->
+<div class="border-2 border-[#111111] bg-[#77FCA4] shadow-[3px_3px_0px_#111] flex flex-col justify-between">
+<div class="h-6 px-2 border-b-2 border-[#111111] bg-white flex items-center justify-between">
+<div class="w-2.5 h-2.5 border border-[#111111] bg-white"></div>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+<span class="font-mono text-[10px] font-extrabold uppercase">AuditHealth.1.1</span>
+<div class="flex-1 mac-titlebar-stripes mx-2 opacity-60"></div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-center text-[10px] font-mono text-[#111111] font-bold mb-1">
+<span>AI CHANNEL AUDIT SCORE</span>
+<span class="bg-[#111111] text-[#77FCA4] px-1 font-bold text-[9px]">S-TIER MODEL</span>
+</div>
+<div class="flex items-center justify-between my-1">
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black font-sans tracking-tight text-[#111111]">94</span>
+<span class="text-xs font-mono font-bold text-[#111111]">/ 100</span>
+</div>
+<div class="border-2 border-[#111111] bg-white p-1 text-[10px] font-mono font-bold text-right shadow-[1px_1px_0px_#111]">
+<div>HOOK SCORE: 96%</div>
+<div>AUDIENCE FIT: 98%</div>
+</div>
+</div>
+<div class="text-[10px] font-mono font-bold flex justify-between py-1 border-y border-[#111111]/30 my-1">
+<span>CADENCE: OPTIMAL</span>
+<span>CTA EFFICIENCY: 88%</span>
+</div>
+<button class="w-full mt-1 py-1 bg-[#111111] hover:bg-[#222222] text-[#77FCA4] text-[10px] font-mono font-extrabold uppercase border border-[#111111] flex items-center justify-center gap-1 shadow-[1px_1px_0px_#111]">
+<span>VIEW FULL AUDIT SPEC</span>
+<span>→</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MAIN SPLIT WORKSPACE: ZONE B (PLANNER) & ZONE C (AI COPILOT) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start font-mono">
+<!-- ZONE B: CENTER-LEFT (Weekly Planner & Shot Lists) -->
+<div class="lg:col-span-7 space-y-3">
+<!-- Window Header (Mac System 7) -->
+<div class="border-2 border-[#111111] bg-white shadow-[3px_3px_0px_#111]"><div class="h-7 px-2 border-b-2 border-[#111111] bg-[#FFC0D0] flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-3 h-3 border border-[#111111] bg-white"></div><span class="font-mono text-xs font-black uppercase">Weekly Planner // sprint_12.weave</span><span class="bg-[#111111] text-[#F78DA7] text-[9px] px-1 font-bold">5 PLATFORMS // 9 NODES</span></div><div class="flex items-center gap-1"><button class="px-2 py-0.5 bg-white border border-[#111111] text-[10px] font-bold hover:bg-[#F78DA7]">WEAVE</button><button class="px-2 py-0.5 bg-[#FFC0D0] border border-[#111111] text-[10px] font-bold">KANBAN</button><button class="px-2 py-0.5 bg-[#03AA5C] text-white border border-[#111111] text-[10px] font-bold shadow-[1px_1px_0px_#111]">+ NEW NODE</button></div></div><div class="p-2.5 border-b-2 border-[#111111] bg-[#F9F6F0]"><div class="flex flex-wrap items-center justify-between gap-1 pb-1 border-b border-[#111111]/30"><div class="flex items-center gap-1.5"><span class="bg-[#111111] text-white text-[10px] font-bold px-1.5 py-0.5">[YT-104]</span><span class="bg-[#FFC0D0] text-[#111111] border border-[#111111] px-1.5 py-0.2 text-[9px] font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#111111] animate-ping"></span>● RECORDING TODAY</span><span class="text-[10px] font-bold text-[#111111]/80">WED 14:00 UTC</span></div><div class="text-[9px] font-bold bg-white border border-[#111111] px-1.5 py-0.2">RETENTION: <span class="text-[#03AA5C]">65% @ 3 MIN</span></div></div><div class="mt-1.5"><h3 class="font-sans font-bold text-sm text-[#111111] leading-snug">Architecture of Autonomous Agent Sandboxes: MicroVMs vs Docker Isolation</h3><div class="flex items-center gap-1 my-1 text-[9px] font-bold"><span class="px-1.5 py-0.2 bg-[#111111] text-[#F78DA7] border border-[#111111]">01_BENCHMARKS</span><span class="px-1.5 py-0.2 bg-white border border-[#111111]">02_SHOTLIST (4)</span><span class="px-1.5 py-0.2 bg-white border border-[#111111]">03_HOOKS (3)</span><span class="text-[#03AA5C] ml-auto font-bold">SCORE: 98%</span></div><div class="border border-[#111111] bg-white p-1.5 text-[10px] flex items-center justify-between"><span class="text-[#111111]/90 truncate"><span class="font-bold text-[#03AA5C]">Hook A:</span> "99% of developers deploy AI agents in containers that can be escaped in 4 lines..."</span><button class="px-1.5 py-0.5 bg-[#03AA5C] text-white font-bold text-[9px] ml-2 shrink-0">EXPORT</button></div></div></div><div class="p-2.5 border-b-2 border-[#111111] bg-white"><div class="flex items-center justify-between pb-1 border-b border-[#111111]/30"><div class="flex items-center gap-1.5"><span class="bg-[#111111] text-white text-[10px] font-bold px-1.5 py-0.5">[LI-089]</span><span class="bg-[#77FCA4] text-[#111111] border border-[#111111] px-1.5 py-0.2 text-[9px] font-bold">● READY FOR DISPATCH</span><span class="text-[10px] font-bold text-[#111111]/80">THU 08:30 EST</span></div><div class="text-[9px] font-bold bg-[#FFC0D0] border border-[#111111] px-1.5 py-0.2">EST. IMPRESSIONS: <span class="text-[#111111] font-extrabold">180K+</span></div></div><div class="mt-1.5"><h3 class="font-sans font-bold text-sm text-[#111111]">5 Hard Truths About AI Native UI Architecture (Why Chatboxes are Dead)</h3><div class="grid grid-cols-3 gap-1.5 my-1.5"><div class="border border-[#111111] bg-[#F9F6F0] p-1.5 flex flex-col justify-between h-14 shadow-[1px_1px_0px_#111]"><div class="flex justify-between items-center text-[9px] font-bold"><span class="bg-[#111111] text-white px-1">SLIDE 01</span><span class="text-[#03AA5C]">VALID</span></div><div class="text-[10px] font-bold truncate">Cover: Chat is a crutch</div><div class="h-1 bg-[#111111] w-full"></div></div><div class="border border-[#111111] bg-[#F9F6F0] p-1.5 flex flex-col justify-between h-14 shadow-[1px_1px_0px_#111]"><div class="flex justify-between items-center text-[9px] font-bold"><span class="bg-[#111111] text-white px-1">SLIDE 02</span><span class="text-[#03AA5C]">VALID</span></div><div class="text-[10px] font-bold truncate">Schema Diff: Sync vs Event</div><div class="h-1 bg-[#03AA5C] w-full"></div></div><div class="border border-[#111111] bg-[#F9F6F0] p-1.5 flex flex-col justify-between h-14 shadow-[1px_1px_0px_#111]"><div class="flex justify-between items-center text-[9px] font-bold"><span class="bg-[#111111] text-white px-1">SLIDES 3-6</span><span class="text-[#111111]/70">4 NODES</span></div><div class="text-[10px] font-bold truncate">Dynamic Canvas Layouts</div><div class="h-1 bg-[#F78DA7] w-full"></div></div></div></div></div><div class="p-2.5 border-b-2 border-[#111111] bg-[#F9F6F0]"><div class="flex items-center justify-between pb-1 border-b border-[#111111]/30"><div class="flex items-center gap-1.5"><span class="bg-[#111111] text-white text-[10px] font-bold px-1.5 py-0.5">[IG-054]</span><span class="bg-[#77FCA4] text-[#111111] border border-[#111111] px-1.5 py-0.2 text-[9px] font-bold">● RENDERED &amp; READY</span><span class="text-[10px] font-bold text-[#111111]/80">FRI 11:00 PST</span></div><div class="text-[9px] font-bold bg-white border border-[#111111] px-1.5 py-0.2">EST. REACH: <span class="text-[#03AA5C] font-extrabold">34K</span></div></div><div class="mt-1.5"><h3 class="font-sans font-bold text-sm text-[#111111]">MicroVM vs Docker Cold Starts Visualized in 15 Seconds</h3><div class="mt-1 p-2 bg-white border border-[#111111] flex items-center justify-between text-[10px]"><div class="flex items-center gap-2 font-mono"><span class="bg-[#F78DA7] text-[#111111] px-1 font-bold border border-[#111111]">9:16 REEL</span><span class="text-[#111111]/80">60fps ProRes · Audio: Synced</span></div><div class="flex items-center gap-1.5"><span class="bg-[#77FCA4] text-[#111111] px-1.5 py-0.2 font-bold border border-[#111111]">HOOK: 96%</span><button class="px-1.5 py-0.5 bg-white hover:bg-[#FFC0D0] border border-[#111111] font-bold shadow-[1px_1px_0px_#111]">PREVIEW</button></div></div></div></div><div class="p-2.5 border-b-2 border-[#111111] bg-white"><div class="flex items-center justify-between pb-1 border-b border-[#111111]/30"><div class="flex items-center gap-1.5"><span class="bg-[#111111] text-white text-[10px] font-bold px-1.5 py-0.5">[RD-019]</span><span class="bg-[#FFC0D0] text-[#111111] border border-[#111111] px-1.5 py-0.2 text-[9px] font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#111111] animate-ping"></span>● IN DISCOURSE / r/LocalLLaMA</span></div><div class="text-[9px] font-bold bg-[#77FCA4] border border-[#111111] px-1.5 py-0.2">TARGET: <span class="text-[#111111] font-extrabold">50+ ENGAGED DEVS</span></div></div><div class="mt-1.5"><h3 class="font-sans font-bold text-sm text-[#111111]">Why we ditched JSON schema for calibrated typed decisions in production</h3><div class="mt-1 p-2 bg-[#F9F6F0] border border-[#111111] flex items-center justify-between text-[10px]"><div class="flex items-center gap-2 font-mono"><span class="font-extrabold text-[#03AA5C]">▲ 418 Upvotes</span><span class="text-[#111111]/70">(98% Ratio)</span><span class="border-l border-[#111111]/30 pl-2 text-[#111111]">62 Comments</span></div><div class="flex items-center gap-1"><span class="bg-white border border-[#111111] px-1.5 py-0.2 text-[#03AA5C] font-bold">BURST VELOCITY</span><button class="px-1.5 py-0.5 bg-[#111111] text-[#F78DA7] font-bold">OPEN THREAD</button></div></div></div></div><div class="p-2.5 bg-[#F9F6F0]"><div class="flex items-center justify-between pb-1 border-b border-[#111111]/30"><div class="flex items-center gap-1.5"><span class="bg-[#111111] text-white text-[10px] font-bold px-1.5 py-0.5">[SB-042]</span><span class="bg-[#FFC0D0] text-[#111111] border border-[#111111] px-1.5 py-0.2 text-[9px] font-bold">DRAFTING</span><span class="text-[10px] font-bold text-[#111111]/80">SAT 12:00 EST</span></div><div class="text-[9px] font-bold bg-white border border-[#111111] px-1.5 py-0.2">READ TIME: 8.5 MIN</div></div><div class="mt-1.5"><h3 class="font-sans font-bold text-sm text-[#111111]">The Death of CRUD: Why Generative Workspaces Require Append-Only Event Logs</h3><div class="mt-1 p-2 bg-white border border-[#111111] text-[10px] leading-relaxed"><span class="text-[#03AA5C] font-extrabold mr-1">&gt;</span><span class="font-mono text-[#111111]">Instead of mutating rows, we commit immutable discrete transaction diffs. Latency dropped to 18ms with zero locks...</span></div></div></div></div>
+</div>
+<!-- ZONE C: CENTER-RIGHT (AI Co-Pilot & Voice Writer) -->
+<div class="lg:col-span-5 space-y-3">
+<div class="border-2 border-[#111111] bg-white shadow-[3px_3px_0px_#111]">
+<!-- Retro Window Header -->
+<div class="h-7 px-2 border-b-2 border-[#111111] bg-[#FFC0D0] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 border border-[#111111] bg-white"></div>
+<span class="font-mono text-xs font-black uppercase">Copilot 1.1 // Voice Engine</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="bg-[#03AA5C] text-white text-[9px] font-bold px-1.5 py-0.5 border border-[#111111]">98.4% MATCH</span>
+<span class="text-[10px] font-bold">sonnet-3.7::rlcd</span>
+</div>
+</div>
+<div class="p-3 space-y-2.5">
+<!-- Channel Calibrator Buttons -->
+<div class="border border-[#111111] bg-[#F9F6F0] p-1.5 flex items-center justify-between text-[10px]">
+<span class="font-extrabold text-[#111111]">CALIBRATION CHANNEL:</span>
+<div class="flex gap-1">
+<button class="px-1.5 py-0.5 bg-white border border-[#111111] hover:bg-[#FFC0D0] font-bold">YT</button>
+<button class="px-1.5 py-0.5 bg-white border border-[#111111] hover:bg-[#FFC0D0] font-bold">IG</button>
+<button class="px-2 py-0.5 bg-[#111111] text-[#F78DA7] border border-[#111111] font-bold shadow-[1px_1px_0px_#111]">LI</button>
+<button class="px-1.5 py-0.5 bg-white border border-[#111111] hover:bg-[#FFC0D0] font-bold">SUB</button>
+<button class="px-1.5 py-0.5 bg-white border border-[#111111] hover:bg-[#FFC0D0] font-bold">RD</button>
+</div>
+</div>
+<!-- Voice Constraints (RLCD style) -->
+<div class="space-y-1">
+<div class="text-[10px] font-bold flex justify-between">
+<span>VOICE CONSTRAINTS // TYPESAFE ENFORCED</span>
+<span class="text-[#03AA5C]">ACTIVE: 4</span>
+</div>
+<div class="flex flex-wrap gap-1 text-[10px]">
+<span class="bg-[#77FCA4] text-[#111111] border border-[#111111] px-1.5 py-0.5 font-bold shadow-[1px_1px_0px_#111]">+ Strict No-Hype</span>
+<span class="bg-[#77FCA4] text-[#111111] border border-[#111111] px-1.5 py-0.5 font-bold shadow-[1px_1px_0px_#111]">+ Code Snippets</span>
+<span class="bg-[#77FCA4] text-[#111111] border border-[#111111] px-1.5 py-0.5 font-bold shadow-[1px_1px_0px_#111]">+ Contrarian</span>
+<span class="bg-white text-[#111111] border border-[#111111] px-1.5 py-0.5 font-medium hover:bg-[#FFC0D0]">+ Terminal Mode</span>
+</div>
+</div>
+<!-- Raw Architectural Ingestion Field -->
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-[#111111]">
+<span>RAW ARCHITECTURAL INGESTION</span>
+<span class="text-[#111111]/70 font-mono">142 TOKENS</span>
+</div>
+<div class="border-2 border-[#111111] bg-white p-2 shadow-[2px_2px_0px_#111]">
+<textarea class="w-full bg-transparent font-mono text-[11px] text-[#111111] focus:outline-none resize-none leading-relaxed" rows="3">We migrated our persistent data pipeline to an append-only event log. Latency dropped from 240ms to 18ms. No locks, purely atomic state transfers.</textarea>
+</div>
+</div>
+<!-- Primary Action Button: typesafe style high-contrast brutal CTA -->
+<button class="w-full py-2 bg-[#111111] hover:bg-[#222222] active:translate-x-0.5 active:translate-y-0.5 text-[#F78DA7] text-xs font-black uppercase tracking-wider border-2 border-[#111111] shadow-[3px_3px_0px_#03AA5C] flex items-center justify-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Synthesize Draft Spec [Enter]</span>
+</button>
+<!-- Synthesized Decision Candidates (RLCD Output) -->
+<div class="border-2 border-[#111111] bg-[#FFC0D0]/20 p-2.5 space-y-2">
+<div class="flex justify-between items-center text-[10px] font-bold pb-1 border-b border-[#111111]/30">
+<span class="text-[#111111]">// SYNTHESIZED_CANDIDATES (CALIBRATED)</span>
+<span class="text-[#03AA5C]">LATENCY: 4.8ms</span>
+</div>
+<!-- Candidate 1 -->
+<div class="border-2 border-[#111111] bg-white p-2.5 space-y-1 shadow-[2px_2px_0px_#111]">
+<div class="flex justify-between items-center text-[10px]">
+<span class="font-black bg-[#111111] text-[#F78DA7] px-1">01 // HIGH CONTRARIAN</span>
+<span class="bg-[#77FCA4] text-[#111111] font-bold border border-[#111111] px-1">CONFIDENCE 97%</span>
+</div>
+<p class="text-[11px] font-medium text-[#111111] leading-normal pt-1">
+                      "Most teams optimize SQL indices when their true latency bottleneck is synchronous state locks. Here is how we dropped latency from 240ms to 18ms with zero downtime..."
+                    </p>
+<div class="flex justify-between items-center text-[10px] pt-1.5 border-t border-[#111111]/20 font-bold">
+<span class="text-[#111111]/70">EST. DWELL: ~48s</span>
+<button class="text-[#03AA5C] hover:underline font-extrabold flex items-center gap-0.5">
+<span>INSERT INTO [LI-089]</span>
+<span>→</span>
+</button>
+</div>
+</div>
+<!-- Candidate 2 -->
+<div class="border-2 border-[#111111] bg-white p-2.5 space-y-1 shadow-[2px_2px_0px_#111]">
+<div class="flex justify-between items-center text-[10px]">
+<span class="font-black bg-[#111111] text-[#F78DA7] px-1">02 // TACTICAL SCHEMATIC</span>
+<span class="bg-[#FFC0D0] text-[#111111] font-bold border border-[#111111] px-1">CONFIDENCE 94%</span>
+</div>
+<p class="text-[11px] font-medium text-[#111111] leading-normal pt-1">
+                      "Stop using relational schemas for reactive agent memory. The append-only event log pattern explained in 3 clean systems diagrams."
+                    </p>
+<div class="flex justify-between items-center text-[10px] pt-1.5 border-t border-[#111111]/20 font-bold">
+<span class="text-[#111111]/70">EST. DWELL: ~42s</span>
+<button class="text-[#03AA5C] hover:underline font-extrabold flex items-center gap-0.5">
+<span>INSERT INTO [LI-089]</span>
+<span>→</span>
+</button>
+</div>
+</div>
+<!-- Control Buttons -->
+<div class="grid grid-cols-2 gap-1.5 pt-1">
+<button class="py-1 bg-white hover:bg-[#FFC0D0] border-2 border-[#111111] text-[10px] font-bold shadow-[2px_2px_0px_#111]">
+                      Refine Prompt (⌘R)
+                    </button>
+<button class="py-1 bg-[#03AA5C] hover:bg-[#028f4d] text-white border-2 border-[#111111] text-[10px] font-bold shadow-[2px_2px_0px_#111]">
+                      Push Notion (⌘S)
+                    </button>
+</div>
+</div>
+<!-- Realtime Cadence Audit Status Strip -->
+<div class="border border-[#111111] bg-white p-2 space-y-1.5 text-[10px]">
+<div class="flex justify-between items-center font-bold">
+<span>REALTIME CADENCE AUDIT:</span>
+<span class="bg-[#77FCA4] text-[#111111] px-1 border border-[#111111]">PASS (OPTIMAL)</span>
+</div>
+<div class="grid grid-cols-3 gap-1 text-center font-bold">
+<div class="border border-[#111111] bg-[#F9F6F0] p-1">PACING <span class="text-[#03AA5C]">96%</span></div>
+<div class="border border-[#111111] bg-[#F9F6F0] p-1">CLARITY <span class="text-[#03AA5C]">92%</span></div>
+<div class="border border-[#111111] bg-[#F9F6F0] p-1">FLUFF <span class="text-[#03AA5C]">0%</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FOOTER STATUS BAR (typesafe.ai authentic retro metadata strip) -->
+<footer class="fixed bottom-0 left-0 right-0 h-6 bg-white border-t-2 border-[#111111] z-50 flex items-center justify-between px-3 font-mono text-[10px] select-none">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 font-bold">
+<span class="w-2 h-2 rounded-full bg-[#03AA5C]"></span>
+<span>SYSTEM_ONE_READY</span>
+</div>
+<span class="text-[#111111]/70">env: production.cluster-01</span>
+<span class="text-[#111111]/70">branch: main #7f8c2e</span>
+<span class="hidden md:inline text-[#111111]/70">latency: 4.8ms</span>
+</div>
+<div class="flex items-center gap-3 font-bold">
+<span>TYPESAFE_AI // RLCD-v4.2</span>
+<span class="text-[9px] bg-[#111111] text-[#F78DA7] px-1">CALIBRATED CONFIDENCE</span>
+<span>UTF-8</span>
+</div>
+</footer>
+</div>
+
+
+</body></html>
